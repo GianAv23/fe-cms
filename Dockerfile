@@ -25,17 +25,14 @@ RUN bun run build
 # Production stage with nginx
 FROM nginx:alpine AS production
 
-# Accept API URL as build argument
-ARG VITE_API_URL=https://cms-api.devbygian.com
-
 # Copy built assets from build stage
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-# Create nginx configuration for SPA routing with dynamic API URL
-RUN echo "server { \
+# Create nginx configuration for SPA routing
+RUN echo 'server { \
     listen 80; \
     server_name _; \
     root /usr/share/nginx/html; \
@@ -49,14 +46,14 @@ RUN echo "server { \
     \
     # Proxy API requests to backend \
     location ~ ^/(users|auth|news|ads|api)/ { \
-        proxy_pass ${VITE_API_URL}; \
+        proxy_pass https://cms-api.devbygian.com; \
         proxy_http_version 1.1; \
-        proxy_set_header Host \$host; \
-        proxy_set_header X-Real-IP \$remote_addr; \
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for; \
-        proxy_set_header X-Forwarded-Proto \$scheme; \
-        proxy_set_header Upgrade \$http_upgrade; \
-        proxy_set_header Connection \"upgrade\"; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+        proxy_set_header Upgrade $http_upgrade; \
+        proxy_set_header Connection "upgrade"; \
         proxy_buffering off; \
         proxy_request_buffering off; \
         proxy_connect_timeout 60s; \
@@ -66,21 +63,21 @@ RUN echo "server { \
     \
     # SPA routing - redirect all requests to index.html \
     location / { \
-        try_files \$uri \$uri/ /index.html; \
+        try_files $uri $uri/ /index.html; \
     } \
     \
     # Cache static assets \
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)\$ { \
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { \
         expires 1y; \
-        add_header Cache-Control \"public, immutable\"; \
+        add_header Cache-Control "public, immutable"; \
     } \
     \
     # Security headers \
-    add_header X-Frame-Options \"SAMEORIGIN\" always; \
-    add_header X-Content-Type-Options \"nosniff\" always; \
-    add_header X-XSS-Protection \"1; mode=block\" always; \
-    add_header Referrer-Policy \"strict-origin-when-cross-origin\" always; \
-}" > /etc/nginx/conf.d/default.conf
+    add_header X-Frame-Options "SAMEORIGIN" always; \
+    add_header X-Content-Type-Options "nosniff" always; \
+    add_header X-XSS-Protection "1; mode=block" always; \
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always; \
+}' > /etc/nginx/conf.d/default.conf
 
 # Remove default nginx config
 RUN rm /etc/nginx/conf.d/default.conf.default 2>/dev/null || true
