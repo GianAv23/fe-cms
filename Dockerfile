@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 # Install dependencies stage
 FROM base AS install
-COPY package.json bun.lock ./
+COPY package.json bun.lock* ./
 RUN bun install --frozen-lockfile
 
 # Build stage
