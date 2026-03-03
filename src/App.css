@@ -1,0 +1,44 @@
+/* @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap"); */
+
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+
+body {
+  font-family: "Geist", sans-serif;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(61, 61, 61);
+  /* scrollbar-gutter: stable; */
+  scroll-behavior: smooth;
+  scroll-margin: 0;
+  scroll-padding: 0;
+}
+
+.dark {
+  scrollbar-color: rgb(61, 61, 61) transparent;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateX(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes floatReverse {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
