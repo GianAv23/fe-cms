@@ -28,6 +28,9 @@ FROM nginx:alpine AS production
 # Copy built assets from build stage
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 # Create nginx configuration for SPA routing
 RUN echo 'server { \
     listen 80; \
@@ -64,7 +67,7 @@ RUN rm /etc/nginx/conf.d/default.conf.default 2>/dev/null || true
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+    CMD curl -f http://localhost/ || exit 1
 
 EXPOSE 80
 
