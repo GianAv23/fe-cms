@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import useSWR from "swr";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import newsIcon from "/animation/news.svg";
 
 const NewsList = () => {
   const navigate = useNavigate();
@@ -24,13 +25,20 @@ const NewsList = () => {
 
   return (
     <Card className="bg-sidebar gap-0 border-[0.5px] py-0 shadow-none">
-      <CardHeader className="gap-4 rounded-t-xl px-3 py-4">
+      <CardHeader className="gap-0 rounded-t-xl px-3 pb-4">
         <div className="flex w-full flex-row items-center justify-between">
           <div className="flex flex-col gap-1">
             <CardTitle className="text-md lg:text-lg">News List</CardTitle>
             <CardDescription className="text-xs lg:text-base">
               Show 5 latest news
             </CardDescription>
+          </div>
+          <div>
+            <img
+              src={newsIcon}
+              alt="News Icon"
+              className="size-24 md:size-28"
+            />
           </div>
         </div>
 

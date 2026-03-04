@@ -1,6 +1,7 @@
 import useApi from "@/hooks/use-api";
-import { Loader2, Newspaper } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import newsIcon from "/animation/news-white.svg";
 
 interface NewsImageProps {
   news_uuid: string;
@@ -62,7 +63,7 @@ const NewsImage: React.FC<NewsImageProps> = ({
       <div
         className={`flex h-32 min-w-64 items-center justify-center rounded-md bg-white object-cover ${className}`}
       >
-        <Newspaper className="text-primary-news/50 size-10" />
+        <img src={newsIcon} alt="News Icon" className="size-28" />
       </div>
     );
   }

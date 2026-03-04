@@ -42,7 +42,6 @@ import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import useSWR from "swr";
 import packageJson from "../../package.json";
-import { useTheme } from "../providers/theme-provider";
 import { Button } from "./ui/button";
 import questionImg from "/animation/question.png";
 import geaLogo from "/logo/gea.png";
