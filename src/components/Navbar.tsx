@@ -180,7 +180,11 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-4">
-        <Button>
+        <Button
+          onClick={() =>
+            window.open("https://github.com/GianAv23/fe-cms", "_blank")
+          }
+        >
           <Code className="h-4 w-4" />
           Source Code
         </Button>
