@@ -1,6 +1,7 @@
 import useApi from "@/hooks/use-api";
 import { Loader2, PanelTop } from "lucide-react";
 import { useEffect, useState } from "react";
+import adsIcon from "/animation/ads-white.svg";
 
 interface AdsImageProps {
   ads_uuid: string;
@@ -61,7 +62,8 @@ const AdsImage: React.FC<AdsImageProps> = ({
       <div
         className={`flex h-32 min-w-64 items-center justify-center rounded-md bg-white object-cover ${className}`}
       >
-        <PanelTop className="text-primary-ads/50 size-10" />
+        {" "}
+        <img src={adsIcon} alt="Ads Icon" className="size-28" />
       </div>
     );
   }

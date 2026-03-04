@@ -1,40 +1,41 @@
+# Base image configured with Bun runtime
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
-# Install dependencies stage
+# Dependencies installed from lock file
 FROM base AS install
 COPY package.json bun.lock* ./
 RUN bun install --frozen-lockfile
 
-# Build stage
+# Application built with production settings
 FROM base AS build
 COPY --from=install /usr/src/app/node_modules node_modules
 COPY . .
 
-# Accept build arguments for environment variables
+# Build arguments accepted for runtime configuration
 ARG VITE_API_URL=https://cms-api.devbygian.com
 ARG NODE_ENV=production
 
-# Set environment variables
+# Environment variables set for build process
 ENV NODE_ENV=${NODE_ENV}
 ENV VITE_API_URL=${VITE_API_URL}
 
-# Build the application
+# Application compiled for production
 RUN bun run build
 
-# Production stage with nginx
+# Nginx configured to serve static assets
 FROM nginx:alpine AS production
 
-# Accept the API URL again in production stage
+# API URL parameter accepted for proxy configuration
 ARG VITE_API_URL=https://cms-api.devbygian.com
 
-# Copy built assets from build stage
+# Built assets copied to nginx root
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
-# Install curl for health checks
+# Curl installed for container health monitoring
 RUN apk add --no-cache curl
 
-# Create nginx configuration template with API URL
+# Nginx server configured with API proxy and caching
 RUN echo "server { \
     listen 80; \
     server_name _; \
@@ -77,7 +78,7 @@ RUN echo "server { \
     add_header Referrer-Policy \"strict-origin-when-cross-origin\" always; \
 }" | sed "s|\${VITE_API_URL}|${VITE_API_URL}|g" > /etc/nginx/conf.d/default.conf
 
-# Health check
+# Container health monitored via HTTP endpoint
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost/ || exit 1
 
