@@ -2,6 +2,10 @@
 
 Content Management System for managing advertisements, news articles, and user data.
 
+## Backend URL
+
+The backend API is hosted at: `https://cms-api.devbygian.com`
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
