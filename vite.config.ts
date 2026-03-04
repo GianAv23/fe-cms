@@ -13,20 +13,7 @@ export default defineConfig({
     },
   },
   server: {
-    // host: true,
-    proxy: {
-      "/api/v1": {
-        target: "http://localhost:3001",
-        changeOrigin: true,
-      },
-    },
     cors: true,
-    allowedHosts: [
-      "localhost",
-      "127.0.0.1",
-      ".ngrok-free.app", // Allows all ngrok subdomains
-      "*.ngrok-free.app", // Alternative syntax for all subdomains
-      "639c-103-165-225-210.ngrok-free.app", // Your specific ngrok URL
-    ],
+    allowedHosts: ["localhost", "127.0.0.1"],
   },
 });
