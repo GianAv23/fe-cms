@@ -1,5 +1,5 @@
 import useApi from "@/hooks/use-api";
-import { Loader2, PanelTop } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import adsIcon from "/animation/ads-white.svg";
 
