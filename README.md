@@ -2,7 +2,11 @@
 
 Content Management System for managing advertisements, news articles, and user data.
 
-## Backend URL
+## Frontend URL
+
+The frontend application is hosted at: `https://cms-gea.devbygian.com`
+
+## Backend API URL
 
 The backend API is hosted at: `https://cms-api.devbygian.com`
 
